@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 
 type Project = {
   id: number;
@@ -168,7 +169,7 @@ export default function PortfolioPage() {
                 className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:-translate-y-1"
               >
                 <div className="relative h-64">
-                  <img
+                  <Image
                     src={project.image}
                     alt={project.title}
                     className="w-full h-full object-cover"
@@ -201,7 +202,7 @@ export default function PortfolioPage() {
               onClick={(e) => e.stopPropagation()}
               className="bg-white rounded-xl overflow-hidden max-w-4xl w-full max-h-[90vh] overflow-y-auto"
             >
-              <img
+              <Image
                 src={selectedProject.image}
                 alt={selectedProject.title}
                 className="w-full h-72 object-cover"
