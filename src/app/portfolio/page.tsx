@@ -3,9 +3,20 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+type Project = {
+  id: number;
+  title: string;
+  category: string;
+  image: string;
+  description: string;
+  client: string;
+  technologies: string[];
+  results: string[];
+};
+
 const categories = ['All', 'Web Development', 'Mobile Apps', 'Digital Marketing', 'UI/UX Design'];
 
-const projects = [
+const projects: Project[] = [
   {
     id: 1,
     title: 'E-Commerce Platform',
@@ -85,7 +96,7 @@ const itemVariants = {
 
 export default function PortfolioPage() {
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   const filteredProjects = selectedCategory === 'All'
     ? projects
