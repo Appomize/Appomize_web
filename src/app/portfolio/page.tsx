@@ -85,7 +85,7 @@ const itemVariants = {
 
 export default function PortfolioPage() {
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [selectedProject, setSelectedProject] = useState(null);
+  const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
 
   const filteredProjects = selectedCategory === 'All'
     ? projects
