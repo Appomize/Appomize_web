@@ -25,10 +25,10 @@ const footerLinks = {
     { name: 'Cookie Policy', href: '/cookies' }
   ],
   social: [
-    { name: 'Twitter', href: 'https://twitter.com/appmize', icon: '𝕏' },
-    { name: 'LinkedIn', href: 'https://linkedin.com/company/appmize', icon: 'in' },
-    { name: 'GitHub', href: 'https://github.com/appmize', icon: '⌘' },
-    { name: 'Instagram', href: 'https://instagram.com/appmize', icon: '📸' }
+    { name: 'Twitter', href: 'https://twitter.com/appomize', icon: '𝕏' },
+    { name: 'LinkedIn', href: 'https://linkedin.com/company/appomize', icon: 'in' },
+    // { name: 'GitHub', href: 'https://github.com/appmize', icon: '⌘' },
+    { name: 'Instagram', href: 'https://instagram.com/appomize', icon: '📸' }
   ]
 };
 
@@ -46,9 +46,9 @@ export default function Footer() {
             className="space-y-6"
           >
             <Logo />
-            <p className="text-gray-400">
+            {/* <p className="text-gray-400">
               Transforming businesses through innovative digital solutions and cutting-edge technology.
-            </p>
+            </p> */}
             <div className="flex space-x-4">
               {footerLinks.social.map((item) => (
                 <a
@@ -120,25 +120,31 @@ export default function Footer() {
             <ul className="space-y-4 text-gray-400">
               <li>
                 <p className="font-medium">Address</p>
-                <p>123 Innovation Drive</p>
-                <p>San Francisco, CA 94105</p>
+                <p>1404 The HydePark</p>
+                <p>Noida, Uttar Pradesh 201301</p>
               </li>
               <li>
                 <p className="font-medium">Email</p>
                 <a
-                  href="mailto:contact@appmize.com"
+                  href="mailto:appomizecommand@gmail.com"
                   className="hover:text-white transition-colors duration-300"
                 >
-                  contact@appmize.com
+                  appomizecommand@gmail.com
                 </a>
               </li>
               <li>
                 <p className="font-medium">Phone</p>
                 <a
-                  href="tel:+1-555-123-4567"
+                  href="tel:+918090276841"
                   className="hover:text-white transition-colors duration-300"
                 >
-                  +1 (555) 123-4567
+                  +91 80902 76841
+                </a> {","}
+                <a
+                  href="tel:+91902633332"
+                  className="hover:text-white transition-colors duration-300"
+                >
+                  +91 90263 33332
                 </a>
               </li>
             </ul>
