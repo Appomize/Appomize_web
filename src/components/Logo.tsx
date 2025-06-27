@@ -13,7 +13,7 @@ export default function Logo() {
     >
       <div className="relative w-15 h-15 flex items-center justify-center">
         <Image
-          src="/images/logos.png"
+          src="/images/logo-nav.png"
           alt="Appomize Logo"
           width={40}
           height={40}

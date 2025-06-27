@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="600" height="400" viewBox="0 0 600 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#60A5FA" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#A78BFA" stop-opacity="0.12"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2563EB"/>
+      <stop offset="100%" stop-color="#A78BFA"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#bg)"/>
+  <!-- Digital elements: app, chart, cloud, design -->
+  <rect x="80" y="60" width="80" height="50" rx="12" fill="#fff" fill-opacity="0.9"/>
+  <rect x="420" y="80" width="70" height="40" rx="10" fill="#A78BFA" fill-opacity="0.18"/>
+  <rect x="250" y="320" width="120" height="30" rx="10" fill="#60A5FA" fill-opacity="0.18"/>
+  <ellipse cx="500" cy="320" rx="30" ry="18" fill="#60A5FA" fill-opacity="0.12"/>
+  <!-- Chart lines -->
+  <polyline points="90,100 110,90 130,110 150,80" fill="none" stroke="#2563EB" stroke-width="3"/>
+  <!-- Cloud icon -->
+  <ellipse cx="470" cy="100" rx="18" ry="10" fill="#60A5FA" fill-opacity="0.7"/>
+  <ellipse cx="460" cy="100" rx="8" ry="5" fill="#fff" fill-opacity="0.8"/>
+  <ellipse cx="480" cy="100" rx="7" ry="4" fill="#fff" fill-opacity="0.8"/>
+  <!-- Design tool (paintbrush) -->
+  <rect x="540" y="320" width="8" height="30" rx="4" fill="#A78BFA"/>
+  <ellipse cx="544" cy="350" rx="6" ry="4" fill="#2563EB"/>
+  <!-- Team figures -->
+  <g>
+    <!-- Person 1: presenting -->
+    <ellipse cx="180" cy="220" rx="22" ry="38" fill="#60A5FA"/>
+    <circle cx="180" cy="190" r="16" fill="#fff"/>
+    <rect x="170" y="230" width="20" height="8" rx="4" fill="#A78BFA"/>
+    <!-- Person 2: laptop -->
+    <ellipse cx="260" cy="250" rx="20" ry="34" fill="#A78BFA"/>
+    <circle cx="260" cy="220" r="14" fill="#fff"/>
+    <rect x="250" y="260" width="20" height="10" rx="3" fill="#2563EB"/>
+    <!-- Person 3: brainstorming -->
+    <ellipse cx="340" cy="210" rx="18" ry="30" fill="#2563EB"/>
+    <circle cx="340" cy="185" r="12" fill="#fff"/>
+    <ellipse cx="340" cy="180" rx="5" ry="2.5" fill="#A78BFA"/>
+    <!-- Person 4: cloud/tech -->
+    <ellipse cx="420" cy="230" rx="16" ry="28" fill="#60A5FA"/>
+    <circle cx="420" cy="205" r="10" fill="#fff"/>
+    <rect x="410" y="240" width="20" height="8" rx="4" fill="#A78BFA"/>
+  </g>
+  <!-- Connection lines -->
+  <path d="M200,220 Q250,180 300,220 Q350,260 400,220" stroke="#A78BFA" stroke-width="2" fill="none" opacity="0.5"/>
+  <!-- Growth arrow -->
+  <path d="M100,300 Q200,200 500,100" stroke="#2563EB" stroke-width="4" fill="none" marker-end="url(#arrowhead)"/>
+  <defs>
+    <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto" markerUnits="strokeWidth">
+      <polygon points="0 0, 8 4, 0 8" fill="#2563EB"/>
+    </marker>
+  </defs>
+</svg> 

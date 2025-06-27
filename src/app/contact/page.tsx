@@ -11,20 +11,20 @@ const contactInfo = [
   {
     icon: <PhoneIcon className="h-6 w-6" />,
     title: 'Phone',
-    details: '+1 (555) 123-4567',
+    details: '+91 90263 33332',
     description: 'Monday to Friday, 9am to 6pm EST'
   },
   {
     icon: <EnvelopeIcon className="h-6 w-6" />,
     title: 'Email',
-    details: 'contact@appmize.com',
+    details: 'appomizecommand@gmail.com',
     description: "We'll respond within 24 hours"
   },
   {
     icon: <MapPinIcon className="h-6 w-6" />,
     title: 'Office',
-    details: '123 Innovation Drive',
-    description: 'San Francisco, CA 94105'
+    details: '1404 The HydePark',
+    description: 'Noida, Uttar Pradesh 20130'
   }
 ];
 

@@ -172,6 +172,8 @@ export default function PortfolioPage() {
                   <Image
                     src={project.image}
                     alt={project.title}
+                    width={800}
+                    height={600}
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
@@ -205,6 +207,8 @@ export default function PortfolioPage() {
               <Image
                 src={selectedProject.image}
                 alt={selectedProject.title}
+                width={800}
+                height={600}
                 className="w-full h-72 object-cover"
               />
               <div className="p-8">
