@@ -1,11 +1,14 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useState } from 'react';
 import { 
   PhoneIcon, 
   EnvelopeIcon, 
   MapPinIcon 
 } from '@heroicons/react/24/outline';
+import { submitContactForm } from '@/lib/contactService';
+import { trackFormSubmission, trackButtonClick } from '@/components/GoogleAnalytics';
 
 const contactInfo = [
   {
@@ -29,9 +32,55 @@ const contactInfo = [
 ];
 
 export default function ContactPage() {
-  const handleSubmit = (e: React.FormEvent) => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<{
+    type: 'success' | 'error' | null;
+    message: string;
+  }>({ type: null, message: '' });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
+    setIsSubmitting(true);
+    setSubmitStatus({ type: null, message: '' });
+
+    try {
+      // Track form submission
+      trackFormSubmission('contact_form');
+      
+      const result = await submitContactForm(formData);
+      
+      if (result.success) {
+        setSubmitStatus({ type: 'success', message: result.message });
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      } else {
+        setSubmitStatus({ type: 'error', message: result.message });
+      }
+    } catch (error) {
+      setSubmitStatus({ 
+        type: 'error', 
+        message: 'An unexpected error occurred. Please try again.' 
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleButtonClick = () => {
+    trackButtonClick('contact_send_message');
   };
 
   return (
@@ -87,6 +136,17 @@ export default function ContactPage() {
               onSubmit={handleSubmit}
               className="bg-white rounded-lg shadow-lg p-8"
             >
+              {/* Status Message */}
+              {submitStatus.type && (
+                <div className={`mb-6 p-4 rounded-md ${
+                  submitStatus.type === 'success' 
+                    ? 'bg-green-50 text-green-800 border border-green-200' 
+                    : 'bg-red-50 text-red-800 border border-red-200'
+                }`}>
+                  {submitStatus.message}
+                </div>
+              )}
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
@@ -96,8 +156,11 @@ export default function ContactPage() {
                     type="text"
                     id="name"
                     name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
                     className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                     required
+                    disabled={isSubmitting}
                   />
                 </div>
                 <div>
@@ -108,8 +171,11 @@ export default function ContactPage() {
                     type="email"
                     id="email"
                     name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
                     className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                     required
+                    disabled={isSubmitting}
                   />
                 </div>
               </div>
@@ -121,8 +187,11 @@ export default function ContactPage() {
                   type="text"
                   id="subject"
                   name="subject"
+                  value={formData.subject}
+                  onChange={handleInputChange}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   required
+                  disabled={isSubmitting}
                 />
               </div>
               <div className="mb-6">
@@ -132,17 +201,26 @@ export default function ContactPage() {
                 <textarea
                   id="message"
                   name="message"
+                  value={formData.message}
+                  onChange={handleInputChange}
                   rows={6}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   required
+                  disabled={isSubmitting}
                 ></textarea>
               </div>
               <div className="text-right">
                 <button
                   type="submit"
-                  className="px-8 py-3 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition-colors duration-300 shadow-md hover:shadow-lg"
+                  onClick={handleButtonClick}
+                  disabled={isSubmitting}
+                  className={`px-8 py-3 text-white rounded-md transition-colors duration-300 shadow-md hover:shadow-lg ${
+                    isSubmitting 
+                      ? 'bg-gray-400 cursor-not-allowed' 
+                      : 'bg-primary-600 hover:bg-primary-700'
+                  }`}
                 >
-                  Send Message
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
                 </button>
               </div>
             </motion.form>

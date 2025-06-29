@@ -3,12 +3,48 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
+import GoogleAnalytics from '@/components/GoogleAnalytics'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Appomize - Digital Solutions for Modern Businesses',
   description: 'Transforming businesses through innovative digital solutions and cutting-edge technology.',
+  keywords: 'digital solutions, web development, mobile apps, AI, machine learning, business transformation',
+  authors: [{ name: 'Appomize Team' }],
+  creator: 'Appomize',
+  publisher: 'Appomize',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://appomize.com'),
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    title: 'Appomize - Digital Solutions for Modern Businesses',
+    description: 'Transforming businesses through innovative digital solutions and cutting-edge technology.',
+    url: 'https://appomize.com',
+    siteName: 'Appomize',
+    images: [
+      {
+        url: '/images/logo.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Appomize - Digital Solutions',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Appomize - Digital Solutions for Modern Businesses',
+    description: 'Transforming businesses through innovative digital solutions and cutting-edge technology.',
+    images: ['/images/logo.jpg'],
+  },
   icons: {
     icon: [
       { url: '/favicon.svg', type: 'image/svg+xml' }
@@ -31,6 +67,13 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
 }
 
@@ -41,7 +84,18 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        {/* Google Search Console Verification */}
+        {process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION && (
+          <meta name="google-site-verification" content={process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION} />
+        )}
+      </head>
       <body className={inter.className}>
+        {/* Google Analytics */}
+        {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
+          <GoogleAnalytics measurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
+        )}
+        
         <Navigation />
         {children}
         <Footer />
