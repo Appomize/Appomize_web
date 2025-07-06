@@ -35,6 +35,7 @@ export default function ContactPage() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phone: '',
     subject: '',
     message: ''
   });
@@ -65,7 +66,7 @@ export default function ContactPage() {
       
       if (result.success) {
         setSubmitStatus({ type: 'success', message: result.message });
-        setFormData({ name: '', email: '', subject: '', message: '' });
+        setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
       } else {
         setSubmitStatus({ type: 'error', message: result.message });
       }
@@ -178,6 +179,22 @@ export default function ContactPage() {
                     disabled={isSubmitting}
                   />
                 </div>
+              </div>
+              <div className="mb-6">
+                <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+                  Phone Number
+                </label>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                  placeholder="+1 (555) 123-4567"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  required
+                  disabled={isSubmitting}
+                />
               </div>
               <div className="mb-6">
                 <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">

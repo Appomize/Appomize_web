@@ -168,29 +168,57 @@ export default function AboutPage() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center"
+            className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center"
           >
-            <motion.div variants={itemVariants} className="relative">
+            <motion.div variants={itemVariants} className="relative order-2 lg:order-1">
               <div className="absolute inset-0 bg-gradient-to-br from-primary-100 to-primary-200 rounded-2xl transform rotate-3"></div>
               <img
-                src="/images/about-image.jpg"
+                src="/images/storyy.png"
                 alt="Our Story"
-                className="relative rounded-2xl shadow-2xl"
+                className="relative rounded-2xl shadow-2xl w-full h-auto"
               />
             </motion.div>
-            <motion.div variants={itemVariants}>
-              <h2 className="text-3xl font-bold mb-6">Our Story</h2>
-              <p className="text-gray-600 mb-6 leading-relaxed">
-                Founded in 2020, Appomize emerged from a vision to make digital transformation accessible
-                to businesses of all sizes. What started as a small team of developers has grown into
-                a full-service digital agency with a track record of successful projects across various
-                industries.
-              </p>
-              <p className="text-gray-600 leading-relaxed">
-                Today, we continue to push the boundaries of what's possible in digital technology,
-                helping our clients stay ahead in an ever-evolving digital landscape. Our commitment
-                to innovation and excellence has made us a trusted partner for businesses worldwide.
-              </p>
+            
+            <motion.div variants={itemVariants} className="order-1 lg:order-2">
+              <div className="mb-8">
+                <h2 className="text-4xl font-bold mb-6 text-gray-900">
+                  Our Story
+                </h2>
+                <div className="w-20 h-1 bg-primary-600 rounded-full mb-8"></div>
+              </div>
+              
+              <div className="space-y-6 text-gray-700 leading-relaxed">
+                <p className="text-lg">
+                  Founded in <span className="font-semibold text-primary-600">2025</span>, Appomize was born from a bold vision: to democratize digital transformation and empower businesses of all sizes to thrive in the digital age. What began as a small team of passionate developers has evolved into a leading full-service digital agency, delivering high-impact solutions across industries ranging from finance and healthcare to retail and logistics.
+                </p>
+                
+                <p className="text-lg">
+                  Driven by innovation and fueled by results, Appomize has built a proven track record of success transforming complex challenges into scalable, user-centric digital experiences. Our team combines deep technical expertise with strategic thinking to help organizations not only adapt to change but lead it.
+                </p>
+                
+                <p className="text-lg">
+                  Today, Appomize stands at the forefront of digital innovation, trusted by clients to deliver future-ready solutions that drive growth, efficiency, and lasting impact. As the digital landscape continues to evolve, so do we—constantly exploring new technologies, refining our craft, and pushing the limits of what's possible.
+                </p>
+              </div>
+              
+              {/* Key highlights */}
+              <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="text-center p-4 bg-primary-50 rounded-lg">
+                  <div className="text-2xl mb-2">🎯</div>
+                  <h4 className="font-semibold text-primary-600">Vision-Driven</h4>
+                  <p className="text-sm text-gray-600">Bold vision for digital transformation</p>
+                </div>
+                <div className="text-center p-4 bg-primary-50 rounded-lg">
+                  <div className="text-2xl mb-2">⚡</div>
+                  <h4 className="font-semibold text-primary-600">Innovation-First</h4>
+                  <p className="text-sm text-gray-600">Cutting-edge technology solutions</p>
+                </div>
+                <div className="text-center p-4 bg-primary-50 rounded-lg">
+                  <div className="text-2xl mb-2">🌱</div>
+                  <h4 className="font-semibold text-primary-600">Future-Ready</h4>
+                  <p className="text-sm text-gray-600">Constantly evolving and adapting</p>
+                </div>
+              </div>
             </motion.div>
           </motion.div>
         </div>
