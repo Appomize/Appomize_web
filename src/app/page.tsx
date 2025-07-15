@@ -1,47 +1,176 @@
 'use client';
 
+import { Suspense, lazy, memo } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRightIcon } from '@heroicons/react/24/outline';
-import Link from 'next/link';
-import { companyInfo } from '@/constants/data';
+
+// Lazy load components for better performance
+const HeroSection = lazy(() => import('@/components/HeroSection'));
+const StatsSection = lazy(() => import('@/components/StatsSection'));
+const ServicesSection = lazy(() => import('@/components/ServicesSection'));
+
+// Loading component
+const SectionLoader = () => (
+  <div className="flex justify-center items-center py-20">
+    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+  </div>
+);
+
+// Optimized main page component
+const HomePage = memo(() => {
+  return (
+    <main className="flex min-h-screen flex-col">
+      {/* Hero Section - Critical, load immediately */}
+      <Suspense fallback={<SectionLoader />}>
+        <HeroSection />
+      </Suspense>
+
+      {/* Statistics Section - Load after hero */}
+      <Suspense fallback={<SectionLoader />}>
+        <StatsSection />
+      </Suspense>
+
+      {/* Services Section - Load after stats */}
+      <Suspense fallback={<SectionLoader />}>
+        <ServicesSection />
+      </Suspense>
+
+      {/* Why Choose Us Section */}
+      <Suspense fallback={<SectionLoader />}>
+        <WhyChooseUsSection />
+      </Suspense>
+
+      {/* Process Section */}
+      <Suspense fallback={<SectionLoader />}>
+        <ProcessSection />
+      </Suspense>
+
+      {/* Technologies Section */}
+      <Suspense fallback={<SectionLoader />}>
+        <TechnologiesSection />
+      </Suspense>
+
+      {/* Testimonials Section */}
+      <Suspense fallback={<SectionLoader />}>
+        <TestimonialsSection />
+      </Suspense>
+
+      {/* CTA Section */}
+      <Suspense fallback={<SectionLoader />}>
+        <CTASection />
+      </Suspense>
+    </main>
+  );
+});
+
+HomePage.displayName = 'HomePage';
+
+// Why Choose Us Section Component
+const WhyChooseUsSection = memo(() => {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 }
+  };
 
 const features = [
   {
-    title: 'Custom App Development',
-    description: 'We build tailored applications that perfectly match your business needs and goals.',
-    icon: '🚀'
-  },
-  {
-    title: 'Digital Marketing',
-    description: 'Strategic marketing solutions to boost your online presence and drive growth.',
-    icon: '📈'
-  },
-  {
-    title: 'UI/UX Design',
-    description: 'Beautiful, intuitive designs that engage users and enhance their experience.',
-    icon: '🎨'
-  },
-  {
-    title: 'Cloud Solutions',
-    description: 'Scalable cloud infrastructure to power your applications and services.',
-    icon: '☁️'
-  }
-];
+      icon: '🏆',
+      title: 'Deep Industry Expertise',
+      description: 'Our team brings years of experience in web development, mobile apps, SEO, and digital marketing with proven track records of success.'
+    },
+    {
+      icon: '👥',
+      title: 'Proven Methodologies',
+      description: 'We follow industry best practices and proven methodologies that have delivered exceptional results for businesses across various sectors.'
+    },
+    {
+      icon: '⭐',
+      title: '100% Client Satisfaction',
+      description: 'Our commitment to excellence and attention to detail has earned us the trust and satisfaction of every client we\'ve worked with.'
+    },
+    {
+      icon: '🕒',
+      title: 'Ongoing Support & Optimization',
+      description: 'We don\'t just build your solution - we maintain it, optimize it, and ensure it continues to drive results for your business.'
+    }
+  ];
 
-const testimonials = [
-  {
-    name: 'Sarah Johnson',
-    role: 'CEO at TechStart',
-    content: 'Appomize transformed our business with their innovative solutions. Their team went above and beyond our expectations.',
-    image: '/images/testimonial-1.jpg'
-  },
-  {
-    name: 'Michael Chen',
-    role: 'Founder of GrowthLabs',
-    content: 'The expertise and professionalism of the Appomize team are unmatched. They delivered our project on time and within budget.',
-    image: '/images/testimonial-2.jpg'
-  }
-];
+  return (
+    <section className="py-20 bg-white">
+      <div className="container mx-auto px-4">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center"
+        >
+          <motion.div variants={itemVariants}>
+            <h2 className="text-4xl font-bold text-gray-900 mb-6">
+              Why Leading Businesses Choose Appomize
+            </h2>
+            <div className="space-y-6">
+              {features.map((feature, index) => (
+                <motion.div 
+                  key={feature.title}
+                  variants={itemVariants}
+                  className="flex items-start"
+                >
+                  <div className="p-2 bg-primary-100 rounded-lg mr-4 text-2xl">
+                    {feature.icon}
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">{feature.title}</h3>
+                    <p className="text-gray-600">{feature.description}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+          
+          <motion.div variants={itemVariants} className="relative">
+            <div className="bg-gradient-to-br from-primary-600 to-primary-700 rounded-2xl p-8 text-white">
+              <h3 className="text-2xl font-bold mb-6">Our Success Metrics</h3>
+              <div className="space-y-6">
+                <div className="flex justify-between items-center">
+                  <span className="text-lg">Average Traffic Increase</span>
+                  <span className="text-2xl font-bold">200%</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-lg">Conversion Rate Improvement</span>
+                  <span className="text-2xl font-bold">150%</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-lg">SEO Ranking Improvement</span>
+                  <span className="text-2xl font-bold">85%</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-lg">Mobile App Performance</span>
+                  <span className="text-2xl font-bold">4.8★</span>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+      </div>
+    </section>
+  );
+});
+
+WhyChooseUsSection.displayName = 'WhyChooseUsSection';
+
+// Process Section Component
+const ProcessSection = memo(() => {
+  const { processSteps } = require('@/constants/homeData');
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -58,115 +187,86 @@ const itemVariants = {
   visible: { opacity: 1, y: 0 }
 };
 
-export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col">
-      {/* Hero Section */}
-      <section className="w-full min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 to-primary-100 relative overflow-hidden">
-        {/* Watermark background below header, centered and fully visible */}
-        <div className="absolute left-1/2 top-4 -translate-x-1/2 z-0 pointer-events-none w-full flex justify-center" style={{height: '0', minHeight: 0}}>
-          <img
-            src="/images/water-mark.jpeg"
-            alt="Company watermark"
-            className="h-[100vh] w-auto object-contain opacity-50"
-            // style={{ filter: 'blur(1px)' }}
-          />
-        </div>
-        {/* Soft gradient overlay for readability */}
-        <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-primary-50/80 z-0 pointer-events-none"></div>
-        <div className="container mx-auto px-4 py-16 flex flex-col md:flex-row items-center justify-between relative z-10">
-          {/* Left: Text Content */}
-          <div className="flex-1 flex flex-col items-center md:items-start text-center md:text-left">
-            <span className="inline-block mb-4 px-4 py-1 rounded-full bg-primary-100 text-primary-700 font-semibold text-sm tracking-wider shadow-sm animate-pulse">
-              Empowering Digital Growth
-            </span>
-            {/* Modern, clean tagline with animated accent */}
-            <div className="w-full mb-5">
-              <h1
-                className="text-4xl md:text-6xl font-extrabold leading-tight tracking-tight text-center md:text-left relative mb-2"
-                style={{
-                  letterSpacing: '-0.03em',
-                  backgroundImage: 'linear-gradient(90deg,rgb(0, 39, 122) 0%, #60A5FA 50%, #FFD600 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                }}
-              >
-                Transforming Ideas into Digital Reality
-              </h1>
-            </div>
-            <div className="w-24 h-2 rounded-full bg-gradient-to-r from-blue-400 via-primary-400 to-purple-400 mb-6 mx-auto md:mx-0 animate-fade-in" />
-            <p
-              className="text-lg md:text-2xl text-gray-700 font-light mb-10 max-w-2xl mx-auto md:mx-0 text-center md:text-left animate-fade-in"
-              style={{ lineHeight: 1.6 }}
+    <section className="py-20 bg-gray-50">
+      <div className="container mx-auto px-4">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          className="text-center mb-16"
+        >
+          <motion.h2 variants={itemVariants} className="text-4xl font-bold text-gray-900 mb-4">
+            Our Proven Process
+          </motion.h2>
+          <motion.p variants={itemVariants} className="text-xl text-gray-600 max-w-2xl mx-auto">
+            We follow a systematic approach that ensures your project's success from concept to launch and beyond.
+          </motion.p>
+        </motion.div>
+
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+        >
+          {processSteps.map((step: any) => (
+            <motion.div
+              key={step.step}
+              variants={itemVariants}
+              className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 text-center"
+              whileHover={{ y: -5 }}
             >
-              We are a leading digital transformation company specializing in <span className="font-semibold text-primary-600">application development</span> and <span className="font-semibold text-primary-600">digital marketing solutions</span>. Our passion for innovation and commitment to excellence drives us to deliver exceptional results for our clients.
-            </p>
-            <div className="flex flex-wrap gap-3 justify-center md:justify-start mb-8">
-              <span className="px-4 py-2 rounded-full bg-primary-600 text-white text-sm font-medium shadow hover:bg-primary-700 transition">Custom Solutions</span>
-              <span className="px-4 py-2 rounded-full bg-primary-100 text-primary-700 text-sm font-medium shadow hover:bg-primary-200 transition">Fast Delivery</span>
-              <span className="px-4 py-2 rounded-full bg-primary-100 text-primary-700 text-sm font-medium shadow hover:bg-primary-200 transition">Expert Team</span>
-              <span className="px-4 py-2 rounded-full bg-primary-100 text-primary-700 text-sm font-medium shadow hover:bg-primary-200 transition">24/7 Support</span>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start mb-8">
-              <Link 
-                href="/contact"
-                className="inline-flex items-center justify-center px-6 py-2 border border-transparent text-base font-medium rounded-lg text-white bg-primary-600 hover:bg-primary-700 transition-all duration-300 transform hover:scale-105 shadow-md"
-              >
-                Let's Talk
-                <ArrowRightIcon className="ml-2 -mr-1 h-5 w-5" />
-              </Link>
-              {/* <Link
-                href="/services"
-                className="inline-flex items-center justify-center px-6 py-2 border border-gray-300 text-base font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 transition-all duration-300 transform hover:scale-105 shadow-md"
-              >
-                Our Services
-              </Link> */}
-            </div>
-            {/* <div className="flex flex-col items-center md:items-start gap-2 mt-2">
-              <span className="text-gray-500 text-sm mb-1">Trusted by leading brands</span>
-              <div className="flex gap-4 items-center justify-center md:justify-start">
-                <span className="inline-block w-8 h-8 bg-gray-200 rounded-full"></span>
-                <span className="inline-block w-8 h-8 bg-gray-200 rounded-full"></span>
-                <span className="inline-block w-8 h-8 bg-gray-200 rounded-full"></span>
-                <span className="inline-block w-8 h-8 bg-gray-200 rounded-full"></span>
-                <span className="inline-block w-8 h-8 bg-gray-200 rounded-full"></span>
-              </div>
-            </div> */}
-          </div>
+              <div className="text-4xl mb-4">{step.icon}</div>
+              <div className="text-sm font-bold text-primary-600 mb-2">{step.step}</div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">{step.title}</h3>
+              <p className="text-gray-600">{step.description}</p>
+            </motion.div>
+          ))}
+        </motion.div>
         </div>
       </section>
+  );
+});
 
-      {/* New centered block below hero content */}
-      {/* <div className="flex flex-col items-center justify-center gap-4 mt-10 mb-8 w-full">
-        <h2 className="text-3xl md:text-5xl font-extrabold bg-gradient-to-r from-blue-600 via-primary-500 to-purple-500 bg-clip-text text-transparent text-center drop-shadow-lg">
-          Local roots, <br className="hidden md:block" />digital wings
-        </h2>
-        <p className="text-lg md:text-2xl text-gray-700 font-light text-center max-w-xl">
-          Empowering your business to grow online <br className="hidden md:block" />with web, marketing & digital tools.
-        </p>
-        <Link
-          href="/contact"
-          className="mt-4 inline-flex items-center justify-center px-6 py-2 border border-transparent text-base font-medium rounded-lg text-white bg-primary-600 hover:bg-primary-700 transition-all duration-300 transform hover:scale-105 shadow-md"
-        >
-          Let's Talk
-        </Link>
-      </div> */}
+ProcessSection.displayName = 'ProcessSection';
 
-      {/* Features Section */}
+// Technologies Section Component
+const TechnologiesSection = memo(() => {
+  const { technologies } = require('@/constants/homeData');
+  
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 }
+  };
+
+  return (
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <motion.div
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
+          viewport={{ once: true, margin: "-100px" }}
             className="text-center mb-16"
           >
             <motion.h2 variants={itemVariants} className="text-4xl font-bold text-gray-900 mb-4">
-              Why Choose Appomize?
+            Cutting-Edge Technologies
             </motion.h2>
             <motion.p variants={itemVariants} className="text-xl text-gray-600 max-w-2xl mx-auto">
-              We combine innovation with expertise to deliver exceptional digital solutions for your business.
+            We stay ahead of the curve with the latest technologies and frameworks to deliver exceptional results.
             </motion.p>
           </motion.div>
 
@@ -174,43 +274,61 @@ export default function Home() {
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+          viewport={{ once: true, margin: "-100px" }}
+          className="flex flex-wrap justify-center gap-4"
           >
-            {features.map((feature, index) => (
+          {technologies.map((tech: string, index: number) => (
               <motion.div
-                key={feature.title}
+              key={tech}
                 variants={itemVariants}
-                className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col items-center"
-              >
-                <img
-                  src={`/images/icons/feature${index+1}.svg`}
-                  alt={feature.title + ' icon'}
-                  className="w-20 h-20 mb-4 object-contain rounded-full bg-primary-50 shadow"
-                />
-                <h3 className="text-xl font-semibold mb-4">{feature.title}</h3>
-                <p className="text-gray-600">{feature.description}</p>
+              className="px-6 py-3 bg-gray-100 rounded-full text-gray-700 font-medium hover:bg-primary-100 hover:text-primary-700 transition-all duration-300"
+              whileHover={{ scale: 1.05 }}
+            >
+              {tech}
               </motion.div>
             ))}
           </motion.div>
         </div>
       </section>
+  );
+});
 
-      {/* Testimonials Section */}
-      {/* <section className="py-20 bg-gray-50">
+TechnologiesSection.displayName = 'TechnologiesSection';
+
+// Testimonials Section Component
+const TestimonialsSection = memo(() => {
+  const { testimonials } = require('@/constants/homeData');
+  
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 }
+  };
+
+  return (
+    <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
           <motion.div
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
+          viewport={{ once: true, margin: "-100px" }}
             className="text-center mb-16"
           >
             <motion.h2 variants={itemVariants} className="text-4xl font-bold text-gray-900 mb-4">
               What Our Clients Say
             </motion.h2>
             <motion.p variants={itemVariants} className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Don't just take our word for it - hear from some of our satisfied clients.
+            Don't just take our word for it - hear from some of our satisfied clients who've achieved remarkable results.
             </motion.p>
           </motion.div>
 
@@ -218,34 +336,45 @@ export default function Home() {
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
-            className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto"
+          viewport={{ once: true, margin: "-100px" }}
+          className="grid grid-cols-1 md:grid-cols-2 gap-8"
           >
-            {testimonials.map((testimonial, index) => (
+          {testimonials.map((testimonial: any, index: number) => (
               <motion.div
                 key={testimonial.name}
                 variants={itemVariants}
-                className="bg-white rounded-xl p-8 shadow-lg"
+              className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-all duration-300"
+              whileHover={{ y: -5 }}
               >
                 <div className="flex items-center mb-6">
-                  <img
-                    src={`/images/testimonials/ai-avatar-${index+1}.svg`}
-                    alt={testimonial.name}
-                    className="w-16 h-16 rounded-full object-cover border-2 border-primary-200 shadow"
-                  />
-                  <div className="ml-4">
-                    <h4 className="text-xl font-semibold">{testimonial.name}</h4>
-                    <p className="text-gray-600">{testimonial.role}</p>
-                  </div>
+                <div className="w-16 h-16 rounded-full bg-gradient-to-r from-primary-500 to-blue-500 flex items-center justify-center text-white font-bold text-xl mr-4">
+                  {testimonial.name.charAt(0)}
                 </div>
-                <p className="text-gray-600 italic">{testimonial.content}</p>
+                <div>
+                  <h4 className="text-xl font-semibold text-gray-900">{testimonial.name}</h4>
+                    <p className="text-gray-600">{testimonial.role}</p>
+                  <p className="text-sm text-primary-600">{testimonial.company}</p>
+                </div>
+              </div>
+              <div className="flex mb-4">
+                {[...Array(testimonial.rating)].map((_, i) => (
+                  <span key={i} className="text-yellow-400">★</span>
+                ))}
+              </div>
+              <p className="text-gray-600 italic">"{testimonial.content}"</p>
               </motion.div>
             ))}
           </motion.div>
         </div>
-      </section> */}
+    </section>
+  );
+});
 
-      {/* CTA Section */}
+TestimonialsSection.displayName = 'TestimonialsSection';
+
+// CTA Section Component
+const CTASection = memo(() => {
+  return (
       <section className="py-20 bg-primary-600 text-white">
         <div className="container mx-auto px-4 text-center">
           <motion.div
@@ -256,18 +385,32 @@ export default function Home() {
           >
             <h2 className="text-4xl font-bold mb-6">Ready to Transform Your Business?</h2>
             <p className="text-xl mb-8 max-w-2xl mx-auto">
-              Let's work together to bring your vision to life. Contact us today to get started.
+            Join businesses that have achieved remarkable digital success with our expertise. Let's discuss how we can help you reach your goals.
             </p>
-            <Link
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <motion.a
               href="/contact"
               className="inline-flex items-center justify-center px-8 py-4 border border-transparent text-lg font-medium rounded-md text-primary-600 bg-white hover:bg-gray-100 transition-all duration-300 transform hover:scale-105"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
-              Get in Touch
-              <ArrowRightIcon className="ml-2 -mr-1 h-5 w-5" />
-            </Link>
+              Start Your Project
+            </motion.a>
+            <motion.a
+              href="/portfolio"
+              className="inline-flex items-center justify-center px-8 py-4 border border-white text-lg font-medium rounded-md text-white hover:bg-white hover:text-primary-600 transition-all duration-300 transform hover:scale-105"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              View Our Work
+            </motion.a>
+          </div>
           </motion.div>
         </div>
       </section>
-    </main>
   );
-} 
+});
+
+CTASection.displayName = 'CTASection';
+
+export default HomePage; 
