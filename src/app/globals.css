@@ -16,4 +16,32 @@
   body {
     @apply bg-white text-gray-900;
   }
+}
+
+@layer components {
+  /* Fallback animations for mobile devices */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fadeIn {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+
+  /* Mobile-specific optimizations */
+  @media (max-width: 768px) {
+    .mobile-optimized {
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+    }
+  }
 } 
