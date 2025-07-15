@@ -4,8 +4,14 @@ import './globals.css'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
+import PerformanceMonitor from '@/components/PerformanceMonitor'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ 
+  subsets: ['latin'],
+  display: 'swap',
+  preload: true,
+  fallback: ['system-ui', 'arial']
+})
 
 export const metadata: Metadata = {
   title: 'Appomize - Digital Solutions for Modern Businesses',
@@ -89,12 +95,25 @@ export default function RootLayout({
         {process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION && (
           <meta name="google-site-verification" content={process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION} />
         )}
+        
+        {/* Resource Hints for Performance */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+        
+        {/* Preload Critical Resources */}
+        <link rel="preload" href="/images/water-mark.jpeg" as="image" />
+        <link rel="preload" href="/images/logo.jpg" as="image" />
       </head>
-      <body className={inter.className}>
-        {/* Google Analytics */}
+      <body className={inter.className} suppressHydrationWarning={true}>
+        {/* Google Analytics - Load asynchronously */}
         {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
           <GoogleAnalytics measurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
         )}
+        
+        {/* Performance Monitor - Load after page load */}
+        <PerformanceMonitor />
         
         <Navigation />
         {children}

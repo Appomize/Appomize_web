@@ -7,7 +7,14 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "analyze": "node scripts/analyze-bundle.js",
+    "analyze:bundle": "ANALYZE=true npm run build",
+    "performance": "npm run build && npm run analyze",
+    "clear-storage": "node scripts/clear-storage.js",
+    "lighthouse-prep": "npm run clear-storage && npm run build",
+    "type-check": "tsc --noEmit",
+    "lint:fix": "next lint --fix"
   },
   "keywords": [],
   "author": "",

@@ -175,6 +175,10 @@ export default function PortfolioPage() {
                     width={800}
                     height={600}
                     className="w-full h-full object-cover"
+                    priority={project.id <= 3}
+                    onError={(e) => {
+                      console.error(`Failed to load image: ${project.image}`);
+                    }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
                     <div className="p-6 text-white">
@@ -210,6 +214,9 @@ export default function PortfolioPage() {
                 width={800}
                 height={600}
                 className="w-full h-72 object-cover"
+                onError={(e) => {
+                  console.error(`Failed to load modal image: ${selectedProject.image}`);
+                }}
               />
               <div className="p-8">
                 <h3 className="text-2xl font-bold mb-4">{selectedProject.title}</h3>
