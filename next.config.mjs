@@ -1,10 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Enable App Router
-  experimental: {
-    appDir: true,
-  },
-
   // Image optimization
   images: {
     formats: ['image/webp', 'image/avif'],
