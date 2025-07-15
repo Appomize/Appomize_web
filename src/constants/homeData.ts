@@ -40,9 +40,9 @@ export const services = [
 
 export const testimonials = [
   {
-    name: 'Aditya',
-    role: 'CEO of VamsaLuxury',
-    company: 'VamsaLuxury',
+    name: 'Yash',
+    role: 'CEO of Chauhan Constructions',
+    company: 'Chauhan Constructions',
     content: 'The team at Appomize delivered exceptional results for our web development project. Their expertise in modern technologies and attention to detail exceeded our expectations. We saw a 200% increase in online conversions.',
     rating: 5,
     image: '/images/testimonials/ai-avatar-1.svg'
