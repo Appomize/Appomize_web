@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 
@@ -46,7 +46,7 @@ const projects: Project[] = [
     description: 'Multi-channel digital marketing campaign for product launch.',
     client: 'Tech Innovators Inc.',
     technologies: ['Google Ads', 'Social Media', 'Email Marketing'],
-    results: ['200% ROI', '1M+ impressions']
+    results: ['100–150% ROI', '1M+ impressions']
   },
   {
     id: 4,
@@ -98,6 +98,19 @@ const itemVariants = {
 export default function PortfolioPage() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  // Track loading state for each project image by id
+  const [imageLoading, setImageLoading] = useState<{ [id: number]: boolean }>(() => {
+    const initial: { [id: number]: boolean } = {};
+    projects.forEach((p) => { initial[p.id] = true; });
+    return initial;
+  });
+  // Hydration fix: only show loader after mount
+  const [hasMounted, setHasMounted] = useState(false);
+  useEffect(() => { setHasMounted(true); }, []);
+
+  const handleImageLoad = (id: number) => {
+    setImageLoading((prev) => ({ ...prev, [id]: false }));
+  };
 
   const filteredProjects = selectedCategory === 'All'
     ? projects
@@ -169,6 +182,12 @@ export default function PortfolioPage() {
                 className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:-translate-y-1"
               >
                 <div className="relative h-64">
+                  {/* Loader Spinner - only after mount */}
+                  {hasMounted && imageLoading[project.id] && (
+                    <div className="absolute inset-0 flex items-center justify-center z-10 bg-white/40">
+                      <div className="animate-spin rounded-full h-10 w-10 border-4 border-primary-600 border-t-transparent"></div>
+                    </div>
+                  )}
                   <Image
                     src={project.image}
                     alt={project.title}
@@ -176,8 +195,10 @@ export default function PortfolioPage() {
                     height={600}
                     className="w-full h-full object-cover"
                     priority={project.id <= 3}
+                    onLoad={() => handleImageLoad(project.id)}
                     onError={(e) => {
                       console.error(`Failed to load image: ${project.image}`);
+                      handleImageLoad(project.id);
                     }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">

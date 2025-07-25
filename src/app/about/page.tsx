@@ -131,6 +131,7 @@ const floatingVariants = {
 };
 
 export default function AboutPage() {
+  const isTeamsEnabled = false;
   return (
     <main className="min-h-screen pt-20">
       {/* Hero Section */}
@@ -266,7 +267,7 @@ export default function AboutPage() {
       </section>
 
       {/* Team Section - Revolutionary Design */}
-      <section className="py-20 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
+     {isTeamsEnabled && <section className="py-20 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
         {/* Animated Background Elements */}
         <div className="absolute inset-0">
           <div className="absolute top-20 left-10 w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></div>
@@ -371,7 +372,7 @@ export default function AboutPage() {
             ))}
           </motion.div>
         </div>
-      </section>
+      </section>}
     </main>
   );
 } 
