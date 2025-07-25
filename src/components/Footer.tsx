@@ -126,10 +126,10 @@ export default function Footer() {
               <li>
                 <p className="font-medium">Email</p>
                 <a
-                  href="mailto:appomizecommand@gmail.com"
+                  href="mailto:info@appomize.com "
                   className="hover:text-white transition-colors duration-300"
                 >
-                  appomizecommand@gmail.com
+                  info@appomize.com 
                 </a>
               </li>
               <li>

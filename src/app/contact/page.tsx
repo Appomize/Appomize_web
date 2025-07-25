@@ -20,7 +20,7 @@ const contactInfo = [
   {
     icon: <EnvelopeIcon className="h-6 w-6" />,
     title: 'Email',
-    details: 'appomizecommand@gmail.com',
+    details: 'info@appomize.com ',
     description: "We'll respond within 24 hours"
   },
   {
