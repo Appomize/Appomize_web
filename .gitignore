@@ -34,3 +34,8 @@ next-env.d.ts
 
 # development scripts and utilities
 /scripts/
+
+# All environment variable files
+.env
+.env.*
+vercel-env-setup.md
